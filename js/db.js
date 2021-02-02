@@ -9,16 +9,13 @@ class DB {
         this.id = id;
     }
 
-    static getClassName() {
-        return this.name;
-    }
     static initializeTable(key) {
         this.table[key] = {};
     }
     static add(obj) {
 
         let i = this.idCounter++;
-        let className = this.getClassName();
+        let className = this.name;
 
         if (!this.table[className]) this.initializeTable(className);
 
@@ -28,12 +25,12 @@ class DB {
     }
     static find(id) {
 
-        let className = this.getClassName();
+        let className = this.name;
         return this.table[className][id]
 
     }
     static all() {
-        let className = this.getClassName();
+        let className = this.name;
         return this.table[className]
     }
 
