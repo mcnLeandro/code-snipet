@@ -1,6 +1,6 @@
-import { battery } from './data-exsamples.mjs'
-import { camera  } from './data-exsamples.mjs'
-import { brand   } from './data-exsamples.mjs'
+import { battery } from './data-examples.mjs'
+import { camera  } from './data-examples.mjs'
+import { brand   } from './data-examples.mjs'
 
 //=================================================
 //DBクラス (DB Class)
@@ -269,36 +269,36 @@ console.log(DB.showDB())
 // console.log(DB.table["Camera"][1]["id"]) -column
 //===================================================
 
-let z = {
-    1:{"v_id":1,},
-    2:{"v_id":1,},
-    3:{"v_id":2,},
-    4:{"v_id":1,},
-}
+// let z = {
+//     1:{"v_id":1,},
+//     2:{"v_id":1,},
+//     3:{"v_id":2,},
+//     4:{"v_id":1,},
+// }
 
-let v = {
-    "id":1,
-    "zs":test
-}
+// let v = {
+//     "id":1,
+//     "zs":test
+// }
 
-let vStr = "v"
-function test(string){
-    let newObj = {}
+// let vStr = "v"
+// function test(string){
+//     let newObj = {}
 
-    Object.keys(z).forEach(record=> {
+//     Object.keys(z).forEach(record=> {
 
-        if(z[record][`${string}_id`] == v.id){
-            newObj[record] = z[record]
-        }
+//         if(z[record][`${string}_id`] == v.id){
+//             newObj[record] = z[record]
+//         }
 
-    })
+//     })
 
-    return newObj;
-}
+//     return newObj;
+// }
 
-console.log(v.zs(vStr))
+// console.log(v.zs(vStr))
 
-z[5] = { "v_id":1}
-z[6] = { "v_id":2}
+// z[5] = { "v_id":1}
+// z[6] = { "v_id":2}
 
-console.log(v.zs(vStr))
+// console.log(v.zs(vStr))
