@@ -1,6 +1,4 @@
 
-
-///-------------------------------------------------------------------------------------------------------
 // Vechicle クラスの定義
 class Vechicle {
   constructor(name, wheels) {
@@ -36,39 +34,49 @@ class Bike extends Vechicle {
 
 // Carクラスのインスタンスを作成し、メソッドを実行
 let car = new Car("消防車", "トヨタ");
-car.specChild();
 
 // Bikeクラスのインスタンスを作成し、メソッドを実行
 let bike = new Bike("白バイ");
-bike.spec();
 
-//console↓
-// この乗り物の名前は消防車です。車輪の数は4個です。
-// トヨタで製造されています。
-// この乗り物の名前は白バイです。車輪の数は2個です
-
-// console.log("-------------------------------------------------------------------------")
 // // Arrayのprototype： Function型のオブジェクト
 // // 出力：ƒ () { [native code] }
-// console.log(Object.getPrototypeOf(Array) + "")
-// console.log(Object.getPrototypeOf(Vechicle) + "")
-// console.log(Object.getPrototypeOf(car) + "")
-// console.log(Object.getPrototypeOf(bike) + "")
+console.log(Object.getPrototypeOf(Array) + "")
+console.log(Object.getPrototypeOf(Vechicle) + "")
+console.log(Object.getPrototypeOf(car) + "")
+console.log(Object.getPrototypeOf(bike) + "")
 
 // // Function型のオブジェクトのprototype：Object型のオブジェクト
 // // 出力：{constructor: ƒ, __defineGetter__: ƒ, __defineSetter__: ƒ, hasOwnProperty: ƒ, __lookupGetter__: ƒ, …}
-// console.log(Object.getPrototypeOf(Object.getPrototypeOf(Array))+ "")
-// console.log(Object.getPrototypeOf(Object.getPrototypeOf(Vechicle)) + "")
-// console.log(Object.getPrototypeOf(Object.getPrototypeOf(car)) + "")
-// console.log(Object.getPrototypeOf(Object.getPrototypeOf(bike)) + "")
+console.log(Object.getPrototypeOf(Object.getPrototypeOf(Array)) + "")
+console.log(Object.getPrototypeOf(Object.getPrototypeOf(Vechicle)) + "")
+console.log(Object.getPrototypeOf(Object.getPrototypeOf(car)) + "")
+console.log(Object.getPrototypeOf(Object.getPrototypeOf(bike)) + "")
 
 
 // // Object型のオブジェクトのprototype：null
 // // 出力：null
-// console.log(Object.getPrototypeOf(Object.getPrototypeOf(Object.getPrototypeOf(Array))))
-// console.log(Object.getPrototypeOf(Object.getPrototypeOf(Object.getPrototypeOf(Vechicle))))
-// console.log(Object.getPrototypeOf(Object.getPrototypeOf(Object.getPrototypeOf(car))))
-// console.log(Object.getPrototypeOf(Object.getPrototypeOf(Object.getPrototypeOf(bike))))
+console.log(Object.getPrototypeOf(Object.getPrototypeOf(Object.getPrototypeOf(Array))))
+console.log(Object.getPrototypeOf(Object.getPrototypeOf(Object.getPrototypeOf(Vechicle))))
+console.log(Object.getPrototypeOf(Object.getPrototypeOf(Object.getPrototypeOf(car))))
+console.log(Object.getPrototypeOf(Object.getPrototypeOf(Object.getPrototypeOf(bike))))
+
+//console↓
+// function () { [native code] }
+// function () { [native code] }
+// [object Object]
+// [object Object]
+// [object Object]
+// [object Object]
+// [object Object]
+// [object Object]
+// null
+// null
+// [Object: null prototype] {}
+// [Object: null prototype] {}
+
+
+
+//------------------------------------------------------------------------------------------
 
 // console.log("-------------------------------------------------------------------------")
 // // オブジェクト作成
