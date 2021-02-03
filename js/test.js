@@ -1,109 +1,40 @@
 
-// Vechicle クラスの定義
-class Vechicle {
-  constructor(name, wheels) {
-    this.name = name;
-    this.wheels = wheels;
-  }
-  spec() {
-    console.log("この乗り物の名前は" + this.name + "です。車輪の数は" + this.wheels + "個です。");
-  }
-}
 
-// Vechicle クラスを継承した Car クラスを定義
-class Car extends Vechicle {
-  constructor(name, maker) {
-    // 親クラスのコンストラクタを呼び出す
-    super(name, 4);
-    this.maker = maker;
-  }
-  specChild() {
-    // 親クラスのメソッドを呼び出す
-    super.spec();
-    console.log(this.maker + "で製造されています。");
-  }
-}
+// オブジェクト作成
+var obj1 = {type: "human"}
+var obj2 = {name: "sato"}
 
-// Vechicle クラスを継承した Bike クラスを定義
-class Bike extends Vechicle {
-  constructor(name) {
-    // 親クラスのコンストラクタを呼び出す
-    super(name, 2);
-  }
-}
+// オブジェクト作成時点のprototype：Object型のオブジェクト
+// 出力：{constructor: ƒ, __defineGetter__: ƒ, __defineSetter__: ƒ, hasOwnProperty: ƒ, __lookupGetter__: ƒ, …}
+console.log(Object.getPrototypeOf(obj1)) 
+console.log(Object.getPrototypeOf(obj2)) // obj1と同様の出力
 
-// Carクラスのインスタンスを作成し、メソッドを実行
-let car = new Car("消防車", "トヨタ");
+// prototype書き換え（obj2のprototypeをobj1に設定）
+Object.setPrototypeOf(obj2, obj1)
 
-// Bikeクラスのインスタンスを作成し、メソッドを実行
-let bike = new Bike("白バイ");
+// prototype書き換え後のobj2のprototype：obj1
+// 出力： {type: "human"}
+console.log(Object.getPrototypeOf(obj2))
 
-// // Arrayのprototype： Function型のオブジェクト
-// // 出力：ƒ () { [native code] }
-console.log(Object.getPrototypeOf(Array) + "")
-console.log(Object.getPrototypeOf(Vechicle) + "")
-console.log(Object.getPrototypeOf(car) + "")
-console.log(Object.getPrototypeOf(bike) + "")
+// obj2自身のプロパティ（name）
+// 出力： sato
+console.log(obj2.name)
 
-// // Function型のオブジェクトのprototype：Object型のオブジェクト
-// // 出力：{constructor: ƒ, __defineGetter__: ƒ, __defineSetter__: ƒ, hasOwnProperty: ƒ, __lookupGetter__: ƒ, …}
-console.log(Object.getPrototypeOf(Object.getPrototypeOf(Array)) + "")
-console.log(Object.getPrototypeOf(Object.getPrototypeOf(Vechicle)) + "")
-console.log(Object.getPrototypeOf(Object.getPrototypeOf(car)) + "")
-console.log(Object.getPrototypeOf(Object.getPrototypeOf(bike)) + "")
-
-
-// // Object型のオブジェクトのprototype：null
-// // 出力：null
-console.log(Object.getPrototypeOf(Object.getPrototypeOf(Object.getPrototypeOf(Array))))
-console.log(Object.getPrototypeOf(Object.getPrototypeOf(Object.getPrototypeOf(Vechicle))))
-console.log(Object.getPrototypeOf(Object.getPrototypeOf(Object.getPrototypeOf(car))))
-console.log(Object.getPrototypeOf(Object.getPrototypeOf(Object.getPrototypeOf(bike))))
+// obj2のprototypeのプロパティ（type）
+// 出力： human
+console.log(obj2.type)
+console.log(obj2)
+console.log(obj1)
 
 //console↓
-// function () { [native code] }
-// function () { [native code] }
-// [object Object]
-// [object Object]
-// [object Object]
-// [object Object]
-// [object Object]
-// [object Object]
-// null
-// null
 // [Object: null prototype] {}
 // [Object: null prototype] {}
-
-
-
-//------------------------------------------------------------------------------------------
-
-// console.log("-------------------------------------------------------------------------")
-// // オブジェクト作成
-// var obj1 = {type: "human"}
-// var obj2 = {name: "sato"}
-
-// // オブジェクト作成時点のprototype：Object型のオブジェクト
-// // 出力：{constructor: ƒ, __defineGetter__: ƒ, __defineSetter__: ƒ, hasOwnProperty: ƒ, __lookupGetter__: ƒ, …}
-// console.log(Object.getPrototypeOf(obj1)) 
-// console.log(Object.getPrototypeOf(obj2)) // obj1と同様の出力
-
-// // prototype書き換え（obj2のprototypeをobj1に設定）
-// Object.setPrototypeOf(obj2, obj1)
-
-// // prototype書き換え後のobj2のprototype：obj1
-// // 出力： {type: "human"}
-// console.log(Object.getPrototypeOf(obj2))
-
-// // obj2自身のプロパティ（name）
-// // 出力： sato
-// console.log(obj2.name)
-
-// // obj2のprototypeのプロパティ（type）
-// // 出力： human
-// console.log(obj2.type)
-// console.log(obj2)
-// console.log(obj1)
+// { type: 'human' }
+// sato
+// human
+// { name: 'sato' }
+// { type: 'human' }
+// (base) leandromcnl
 
 
 // console.log("-------------------------------------------------------------------------")
