@@ -37,11 +37,42 @@ class DB {
         let className = this.name;
         return this.table[className]
     }
+    belongsTo(model){
+        let modelName = model.name.toLowerCase()
+        this[modelName] = () => model.find(this[`${modelName}_id`]);
+    }
+    hasmany(model){
+        let modelName = model.name.toLowerCase()
+        this[`${modelName}s`] = () => {
+
+            let newObj = {}
+
+            Object.keys(DB.table[model.name]).forEach(record=> {
+                let modelObjs = DB.table[model.name]
+                let thisClassName = this.constructor.name.toLocaleLowerCase()
+
+                if(modelObjs[record][`${thisClassName}_id`] == this.id){
+                    newObj[record] = modelObjs[record]
+                }
+
+            })
+
+            return newObj;
+        };
+    }
 
     //=========================================================
     // DBの表示関数 (functions to show DB)
     //=========================================================
 
+    static getStringOf(data){
+        if (typeof (data) == "string")   data = data
+        if (typeof (data) == "number")   data = String(data);
+        if (typeof (data) == "function") data = String(data())
+        if (typeof (data) == "object")   data = String(Object.keys(data))
+
+        return data;
+    }
     //データがひとつもない場合はエラーになるので修正が必要
     static getMaxColumnLengthArr(obj) {
         let arr = []
@@ -53,12 +84,7 @@ class DB {
             Object.keys(obj).forEach(id => {
 
                 let data = obj[id][key];
-                let dataLen;
-
-                if (typeof (data) == "string") dataLen = data.length
-                if (typeof (data) == "number") dataLen = String(data).length;
-                if (typeof (data) == "object") dataLen = String(Object.keys(data)).length
-
+                let dataLen = DB.getStringOf(data).length
                 len = dataLen > len ? dataLen : len;
             })
 
@@ -74,9 +100,7 @@ class DB {
         return string;
     }
     static getColumnString(data, len) {
-        if (typeof (data) == "string") data = data
-        if (typeof (data) == "number") data = String(data);
-        if (typeof (data) == "object") data = String(Object.keys(data))
+        data = this.getStringOf(data)
 
         let string = " " + data + " "
 
@@ -171,6 +195,9 @@ class DB {
     }
 }
 
+//=================================================
+//Model classes
+//=================================================
 
 class Battery extends DB {
     //          (名前,   容量,      電圧,    最大放電電流(A), 終始電圧)
@@ -187,18 +214,19 @@ class Camera extends DB {
     //         ( ブランドid、モデル,消費電力(wh))
     constructor(id, brand_id, model, powerConsumptionWh) {
         super(id);
-        this.brand_id = brand_id;
+
         this.model = model;
         this.powerConsumptionW = powerConsumptionWh * 3600;
+
+        this.brand_id = brand_id;
+        super.belongsTo(Brand)
     }
 }
 class Brand extends DB {
-    constructor(id, camera_ids, name) {
+    constructor(id,  name) {
         super(id);
-        this.camera_ids = camera_ids;
         this.name = name;
-        // this.cameras = 1;
-
+        super.hasmany(Camera)
     }
 }
 
@@ -239,10 +267,9 @@ for (let i = 0; i < camera.length; i++) {
 for (let i = 0; i < brand.length; i++) {
     let currObj = brand[i];
 
-    let camera_ids = currObj["camera_ids"];
     let name = currObj["name"];
 
-    let newBrand = new Brand(null, camera_ids, name);
+    let newBrand = new Brand(null, name);
 
     Brand.add(newBrand);
 
@@ -252,6 +279,13 @@ for (let i = 0; i < brand.length; i++) {
 console.log(DB.showDB())
 // console.log(DB.table)
 
+//hasmany
+console.log(Brand.find(1))
+console.log(Brand.find(1).cameras())
+
+//belongsTo
+console.log(Camera.find(1))
+console.log(Camera.find(1).brand())
 //=================================================
 // DB構造 (DB structure)
 //===============================================
@@ -268,37 +302,3 @@ console.log(DB.showDB())
 // console.log(DB.table["Camera"][1])       -record
 // console.log(DB.table["Camera"][1]["id"]) -column
 //===================================================
-
-// let z = {
-//     1:{"v_id":1,},
-//     2:{"v_id":1,},
-//     3:{"v_id":2,},
-//     4:{"v_id":1,},
-// }
-
-// let v = {
-//     "id":1,
-//     "zs":test
-// }
-
-// let vStr = "v"
-// function test(string){
-//     let newObj = {}
-
-//     Object.keys(z).forEach(record=> {
-
-//         if(z[record][`${string}_id`] == v.id){
-//             newObj[record] = z[record]
-//         }
-
-//     })
-
-//     return newObj;
-// }
-
-// console.log(v.zs(vStr))
-
-// z[5] = { "v_id":1}
-// z[6] = { "v_id":2}
-
-// console.log(v.zs(vStr))
