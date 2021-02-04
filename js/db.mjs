@@ -37,12 +37,28 @@ class DB {
         let className = this.name;
         return this.table[className]
     }
+    toKeyFormat(string) {
+        let newString = string[0];
+        let uppers = string.substring(1, string.length - 1).match(/[A-Z]/g)
+        string = string.substring(1, string.length)
+    
+        if(uppers == null)return (newString + string).toLowerCase();
+        uppers.forEach(value => {
+            let upperIndex = string.indexOf(value)
+            newString += string.substring(0, upperIndex)
+            newString += "_" + string[upperIndex]
+            string = string.substring(upperIndex+1,string.length)
+            console.log(string)
+        });
+    
+        return (newString + string).toLowerCase();
+    }
     belongsTo(model){
-        let modelName = model.name.toLowerCase()
+        let modelName = this.toKeyFormat(model.name)
         this[modelName] = () => model.find(this[`${modelName}_id`]);
     }
     hasmany(model){
-        let modelName = model.name.toLowerCase()
+        let modelName = this.toKeyFormat(model.name)
         this[`${modelName}s`] = () => {
 
             let newObj = {}
