@@ -28,10 +28,20 @@ class DB {
 
     }
     static find(id) {
-
         let className = this.name;
         return this.table[className][id]
+    }
+    static where(key1,value1, key2, value2){
+        let className = this.name
+        let models = this.table[className]
 
+        let arr = []
+        Object.keys(models).forEach(id =>{
+            let model = models[id]
+            if(model[key1] == value1 && model[key2] == value2) arr.push(model);
+        })
+
+        return arr;
     }
     static all() {
         let className = this.name;
@@ -48,7 +58,6 @@ class DB {
             newString += string.substring(0, upperIndex)
             newString += "_" + string[upperIndex]
             string = string.substring(upperIndex+1,string.length)
-            console.log(string)
         });
     
         return (newString + string).toLowerCase();
@@ -63,6 +72,8 @@ class DB {
 
             let newObj = {}
 
+            if(!DB.table[model.name]) DB.initializeTable(model.name)
+
             Object.keys(DB.table[model.name]).forEach(record=> {
                 let modelObjs = DB.table[model.name]
                 let thisClassName = this.constructor.name.toLocaleLowerCase()
@@ -70,7 +81,6 @@ class DB {
                 if(modelObjs[record][`${thisClassName}_id`] == this.id){
                     newObj[record] = modelObjs[record]
                 }
-
             })
 
             return newObj;
@@ -89,7 +99,6 @@ class DB {
 
         return data;
     }
-    //データがひとつもない場合はエラーになるので修正が必要
     static getMaxColumnLengthArr(obj) {
         let arr = []
 
@@ -146,7 +155,6 @@ class DB {
 
 
     }
-    //これも一つもデータがない状態だとエラーになる
     static getColumnRecordString(model,lenArr){
         let string = "";
         let line = "|";
@@ -294,14 +302,10 @@ for (let i = 0; i < brand.length; i++) {
 
 console.log(DB.showDB())
 // console.log(DB.table)
+console.log(Battery.find(1)["name"])
+console.log(Battery.where("name","IOP-E140","maxDraw",14)[0])
 
-//hasmany
-console.log(Brand.find(1))
-console.log(Brand.find(1).cameras())
 
-//belongsTo
-console.log(Camera.find(1))
-console.log(Camera.find(1).brand())
 //=================================================
 // DB構造 (DB structure)
 //===============================================
